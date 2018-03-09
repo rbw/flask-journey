@@ -19,8 +19,9 @@ class Route(object):
     :param path: route path
     """
 
-    def __init__(self, path='/'):
+    def __init__(self, path='/', description=''):
         self.path = self.sanitize_path(path)
+        self.description = description
         self.blueprints = []
 
     @staticmethod
@@ -36,13 +37,14 @@ class Route(object):
 
         return path.rstrip('/')
 
-    def attach_bp(self, bp):
+    def attach_bp(self, bp, description=''):
         """Attaches a blueprint
 
         :param bp: :class:`flask.Blueprint` object
+        :param description: Optional description string
         """
 
-        self.blueprints.append(bp)
+        self.blueprints.append((bp, description))
 
 
 class Journey(object):
@@ -81,9 +83,6 @@ class Journey(object):
         :return: List of route pairs
         """
 
-        def get_full_path(p_base, p_bp, p_child):
-            return "{0}{1}{2}".format(p_base, p_bp, p_child)
-
         routes = []
 
         for route in self._routes:
@@ -91,7 +90,13 @@ class Journey(object):
             for blueprint in route['blueprints']:
                 bp_path = blueprint['path']
                 for child in blueprint['routes']:
-                    routes.append((child['endpoint'], get_full_path(base_path, bp_path, child['path'])))
+                    routes.append(
+                        (
+                            child['endpoint'],
+                            base_path + bp_path + child['path'],
+                            child['methods']
+                        )
+                    )
 
         return routes
 
@@ -108,18 +113,19 @@ class Journey(object):
 
         registered_route = {
             'base_path': route.path,
+            'description': route.description,
             'blueprints': []
         }
 
-        for bp in route.blueprints:
+        for (bp, description) in route.blueprints:
             # Get route name (from url_prefix or name attr) and prepend with a slash
-            child_path = self.get_child_name(bp)
+            child_path = self.get_child_path(bp)
 
             # Create full path to the BP route
-            base_path = "{0}/{1}".format(route.path, child_path)
+            base_path = route.path + child_path
 
             # Register the BP
-            blueprint = self._register_blueprint(bp, base_path, child_path)
+            blueprint = self._register_blueprint(bp, base_path, child_path, description)
 
             # Add routes for this blueprint
             blueprint['routes'] = self._get_blueprint_routes(base_path)
@@ -129,7 +135,7 @@ class Journey(object):
 
         self._routes.append(registered_route)
 
-    def _register_blueprint(self, bp, base_path, child_path):
+    def _register_blueprint(self, bp, base_path, child_path, description):
         """Register and return info about the registered blueprint
 
         :param bp: :class:`flask.Blueprint` object
@@ -143,21 +149,19 @@ class Journey(object):
             'name': bp.name,
             'path': child_path,
             'import_name': bp.import_name,
+            'description': description,
             'routes': []
         }
 
     @staticmethod
-    def get_child_name(bp):
+    def get_child_path(bp):
         """Strips leading slashes from url_prefix, if it has been set, and returns. If not, return `Blueprint.name`.
 
         :param bp: :class:`flask.Blueprint` object
         :return: blueprint name
         """
 
-        if bp.url_prefix and bp.url_prefix[:1] == '/':
-            return bp.url_prefix.lstrip('/')
-
-        return bp.name
+        return bp.url_prefix or '/' + bp.name
 
     def _get_blueprint_routes(self, base_path):
         """Returns detailed information about registered blueprint routes matching the `Route` path
