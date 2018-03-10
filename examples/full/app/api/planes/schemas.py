@@ -4,7 +4,7 @@ from marshmallow import Schema, fields, validate
 
 
 class QuerySchema(Schema):
-    wings = fields.Integer(required=True, validate=validate.Range(min=2, max=8))
+    min_wings = fields.Integer(required=True, validate=validate.Range(min=2, max=8))
 
 
 class PlaneSchema(Schema):

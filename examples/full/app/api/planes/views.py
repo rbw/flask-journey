@@ -28,7 +28,7 @@ def delete(plane_id):
 
 @route(bp, '/', methods=['GET'], query_schema=QuerySchema(strict=True), marshal_with=PlaneSchema(many=True))
 def get_many(__query=None):
-    return get_planes(__query['data']['wings'])
+    return get_planes(__query['data']['min_wings'])
 
 
 @route(bp, '/', methods=['POST'], body_schema=PlaneSchema(strict=True), marshal_with=PlaneSchema())
