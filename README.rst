@@ -1,7 +1,9 @@
 Flask-Journey
 =============
 
-Lightweight and simple extension for Flask that primarily assists with blueprint and route management, but also (de)serialization and validation in blueprint enabled views.
+
+Provides a clean, delarative way to import and manage blueprints and routes.
+Additionally, it provides easy, homogeneous methods of (de)serialization and validation in blueprint enabled views.
 
 It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
@@ -13,7 +15,7 @@ Highlights
 ----------
 
 - Dead simple blueprint and route management that works with vanilla blueprints in Flask
-- Drop-in replacement for ``flask.Blueprint.route`` with support for Marshmallow deserialization + validation and marshalling
+- Drop-in replacement for ``flask.Blueprint.route`` with support for Marshmallow
 
 
 Installing
