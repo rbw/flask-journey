@@ -15,26 +15,31 @@ Highlights
 Basic usage
 -----------
 
+This shows some basic usage to give you an idea of how the extension works.
+
+Check out the **examples** directory for usable examples.
+
+
 Blueprint / Route management
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This component of Flask-Journey is primarily for larger applications using factories, but works in any type of Flask application.
 
 
-**routes.py**
+**api/routes.py**
 
 .. code-block:: python
 
   from flask_journey import Route
-  from .users_api import bp as users_bp
-  from .groups_api import bp as groups_bp
+  from .users import bp as users_bp
+  from .groups import bp as groups_bp
 
   v1 = Route('/api/v1')
   v1.attach_bp(users_bp, description='Users API')
   v1.attach_bp(groups_bp)
 
 
-**app.py**
+**api/app.py**
 
 .. code-block:: python
 
