@@ -105,7 +105,7 @@ This component of Flask-Journey is primarily for larger applications using facto
   from flask import Flask
   from flask_journey import Journey
 
-  from .routes import v1
+  from .bundles import v1
 
   app = Flask(__name__)
 
