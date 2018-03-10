@@ -11,13 +11,86 @@ Highlights
 - Dead simple blueprint and route management that works with vanilla blueprints in Flask
 - Drop-in replacement for ``flask.Blueprint.route`` with support for Marshmallow deserialization + validation and marshalling
 
+
+Basic usage
+-----------
+
 Blueprint / Route management
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The blueprint management component of Flask-Journey is primarily for larger applications with application factories, but works in any type of Flask application.
 
 
-file ``routes.py``::
+**routes.py**
 
-from .users_api import 
+.. code-block:: python
+
+  from flask_journey import Route
+  from .users_api import bp as users_bp
+  from .groups_api import bp as groups_bp
+
+  v1 = Route('/api/v1')
+  v1.attach_bp(users_bp, description='Users API')
+  v1.attach_bp(groups_bp)
+
+
+**app.py**
+
+.. code-block:: python
+
+  from flask import Flask
+  from flask_journey import Journey
+
+  from .routes import v1
+
+  journey = Journey()
+  app = Flask(__name__)
+  journey.init_app(app)
+  journey.register_route(v1)
+  print(journey.routes_simple)
+
+
+Route decorator
+^^^^^^^^^^^^^^^
+
+The flask_journey.utils.route decorator is used with standard Flask blueprints and enables easy (de)serialization and validation with the help of the Marshmallow library.
+
+**api/schemas.py**
+
+.. code-block:: python
+  from marshmallow import Schema, fields, validate
+
+  class QuerySchema(Schema):
+      first_name = fields.String(required=False)
+      last_name = fields.String(required=False)
+
+
+  class UserSchema(Schema):
+      id = fields.Integer(required=True)
+      first_name = fields.String(required=True)
+      last_name = fields.String(required=True)
+      user_name = fields.String(required=True)
+
+**api/routes.py**
+
+.. code-block:: python
+
+  from flask import Blueprint
+  from flask_journey.utils import route
+  from db import create_user, get_user
+  
+  from .schema import UserSchema
+  
+  bp = Blueprint('users', __name__)
+
+  @route(bp, '/', methods=['GET'], query_schema=QuerySchema(strict=True), marshal_with=UserSchema(many=True))
+  def get_many(__query=None):
+      return get_users(**__query['data'])
+
+  @route(bp, '/', methods=['POST'], body_schema=UserSchema(strict=True), marshal_with=UserSchema())
+  def create(__body=None):
+      return create_user(**__body['data'])
+
+
+
 
