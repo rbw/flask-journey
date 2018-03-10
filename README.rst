@@ -58,6 +58,7 @@ The flask_journey.utils.route decorator is used with standard Flask blueprints a
 **api/schemas.py**
 
 .. code-block:: python
+
   from marshmallow import Schema, fields, validate
 
   class QuerySchema(Schema):
