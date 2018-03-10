@@ -22,8 +22,7 @@ def _validate_schema(obj):
     return obj
 
 
-def route(bp, *args, strict_slashes=False,
-          body_schema=None, query_schema=None, marshal_with=None, **kwargs):
+def route(bp, *args, **kwargs):
 
     """Journey route decorator
 
@@ -35,20 +34,19 @@ def route(bp, *args, strict_slashes=False,
     __query - kwarg if `query_schema` was passed
     __body - kwarg if `body_schema` was passed
 
-
     :param bp: :class:`flask.Blueprint` object
-    :param strict_slashes: Enable / disable strict slashes (default False)
-    :param body_schema: Deserialize JSON body with this schema
-    :param query_schema: Deserialize Query string with this schema
-    :param marshal_with: Serialize the output with this schema
     :param args: args to pass along to `Blueprint.route`
-    :param kwargs: kwargs to pass along to `Blueprint.route`
+    :param kwargs:
+        - :strict_slashes: Enable / disable strict slashes (default False)
+        - :body_schema: Deserialize JSON body with this schema
+        - :query_schema: Deserialize Query string with this schema
+        - :marshal_with: Serialize the output with this schema
     """
 
-    kwargs['strict_slashes'] = strict_slashes
-    body_schema = _validate_schema(body_schema)
-    query_schema = _validate_schema(query_schema)
-    marshal_with = _validate_schema(marshal_with)
+    kwargs['strict_slashes'] = kwargs.pop('strict_slashes', False)
+    body_schema = _validate_schema(kwargs.pop('body_schema', None))
+    query_schema = _validate_schema(kwargs.pop('query_schema', None))
+    marshal_with = _validate_schema(kwargs.pop('marshal_with', None))
 
     def decorator(f):
         @bp.route(*args, **kwargs)
