@@ -27,11 +27,20 @@ Start the server using the manager::
 
 $ python manage.py runserver
 
-Then point your browser to::
 
-http://127.0.0.1:5000/api/v1/planes?wings=3
+Test it out *now* with a user-agent::
 
-...to check out it out from a browsers point of view.
+============================ ====== ==============
+Description                  METHOD URL
+============================ ====== ========
+show routes                  GET             http://127.0.0.1:5000/api/v1/routes
+planes with 3 or more wings  GET                       http://127.0.0.1:5000/api/v1/planes?wings=3
+get pilot by id              GET              http://127.0.0.1:5000/api/v1/pilots/1
+update plane #3                PUT             http://127.0.0.1:5000/api/v1/planes/3
+delete plane #2              DELETE             http://127.0.0.1:5000/api/v1/planes/2
+create a new plane           POST             http://127.0.0.1:5000/api/v1/planes
+get pilot by name            GET             http://127.0.0.1:5000/api/v1/pilots?name=Morty
+
 
 Other
 -----
