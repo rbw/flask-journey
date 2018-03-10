@@ -30,10 +30,10 @@ def create_plane(plane):
     return plane
 
 
-def upsert_plane(plane_id, plane):
+def update_plane(plane_id, plane):
     existing_plane = next((x for x in data if x['id'] == int(plane_id)), {})
     if not existing_plane:
-        plane = create_plane(plane)
+        return {}
     else:
         for i, item in enumerate(data):
             if item['id'] == int(plane_id):

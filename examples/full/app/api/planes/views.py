@@ -3,7 +3,7 @@
 from flask import Blueprint, jsonify
 from flask_journey.utils import route
 
-from app.fake_data.planes import get_plane, get_planes, create_plane, upsert_plane, delete_plane
+from app.fake_data.planes import get_plane, get_planes, create_plane, update_plane, delete_plane
 
 from .schemas import PlaneSchema, QuerySchema
 
@@ -17,8 +17,8 @@ def get_one(plane_id):
 
 
 @route(bp, '/<plane_id>', methods=['PUT'], body_schema=PlaneSchema(strict=True), marshal_with=PlaneSchema())
-def upsert(plane_id, __body=None):
-    return upsert_plane(plane_id, __body['data'])
+def update(plane_id, __body=None):
+    return update_plane(plane_id, __body['data'])
 
 
 @route(bp, '/<plane_id>', methods=['DELETE'])
