@@ -5,7 +5,8 @@ Lightweight extension for Flask that primarily assists with blueprint and route 
 
 It uses and is compatible with the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
-In my opinion, this is pretty much all you need to get your base REST API up and running with Flask.
+Add an auth component and you're pretty much up and running with your REST API.
+
 
 Highlights
 ----------
