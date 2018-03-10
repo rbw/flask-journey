@@ -139,7 +139,7 @@ This component of Flask-Journey is primarily for larger applications using facto
 Compatibility
 -------------
 - Python 2 and 3
-- Flask > 0.9
+- Flask > 0.7
 
 Author
 ------
