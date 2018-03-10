@@ -3,91 +3,77 @@
 """
     Flask-Journey
     ~~~~~~~~~~~~
-    Simple Blueprint / route manager for Flask
+    Simple Blueprint manager for Flask
 
 """
 
 __author__ = "Robert Wikman <rbw@vault13.org>"
 __version__ = "0.1.0"
 
-from .exceptions import InvalidBasePath, IncompatibleRoute
-
-
-class Route(object):
-    """Creates a new route on the path specified
-
-    :param path: route path
-    """
-
-    def __init__(self, path='/', description=''):
-        self.path = self.sanitize_path(path)
-        self.description = description
-        self.blueprints = []
-
-    @staticmethod
-    def sanitize_path(path):
-        """Performs sanitation of the route path after validating
-
-        :param path: path to sanitize
-        :return: sanitized path
-        """
-
-        if path[:1] != '/':
-            raise InvalidBasePath('The manager base path must start with a slash')
-
-        return path.rstrip('/')
-
-    def attach_bp(self, bp, description=''):
-        """Attaches a blueprint
-
-        :param bp: :class:`flask.Blueprint` object
-        :param description: Optional description string
-        """
-
-        self.blueprints.append((bp, description))
+from .exceptions import IncompatibleBundle, InvalidBasePath, IncompatibleSchema
+from .blueprint_bundle import BlueprintBundle
+from .utils import route
 
 
 class Journey(object):
     """Central controller class.
-    Registers blueprints and exposes `routes` property, which lists all routes added with Journey.
+    Registers bundles and exposes properties for listing routes.
+
     :param app: App to pass directly to Journey
     """
 
     def __init__(self, app=None):
         self._app = None
-        self._routes = []
+        self._registered_bundles = []
+        self._attached_bundles = []
 
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
         """Initializes Journey extension
+
         :param app: App passed from constructor or directly to init_app
         """
 
-        self._app = app
+        for bundle in self._attached_bundles:
+            processed_bundle = {
+                'path': bundle.path,
+                'description': bundle.description,
+                'blueprints': []
+            }
+
+            for (bp, description) in bundle.blueprints:
+                # Register the BP
+                blueprint = self._register_blueprint(app, bp, bundle.path,
+                                                     self.get_child_path(bp), description)
+
+                # Finally, attach the blueprints to its parent
+                processed_bundle['blueprints'].append(blueprint)
+
+            self._registered_bundles.append(processed_bundle)
 
     @property
     def routes_detailed(self):
-        """Returns a detailed list of routes added with Journey
+        """Returns a detailed list bundles and its blueprints and routes
 
         :return: List of blueprint routes
         """
 
-        return self._routes
+        return self._registered_bundles
 
     @property
     def routes_simple(self):
-        """Returns a list of tuples containing endpoint-route pairs
+        """Returns simple info about registered blueprints
 
-        :return: List of route pairs
+        :return: Tuple containing endpoint, path and allowed methods for each route
         """
 
         routes = []
 
-        for route in self._routes:
-            base_path = route['base_path']
-            for blueprint in route['blueprints']:
+        for bundle in self._registered_bundles:
+            base_path = bundle['base_path']
+            for blueprint in bundle['blueprints']:
                 bp_path = blueprint['path']
                 for child in blueprint['routes']:
                     routes.append(
@@ -100,57 +86,39 @@ class Journey(object):
 
         return routes
 
-    def register_route(self, route):
-        """Registers blueprints attached to the :class:`flask_journey.Route` object passed
+    def attach_bundle(self, bundle):
+        """Attaches a bundle object
 
-        :param route: :class:`flask_journey.Route` object
+        :param bundle: :class:`flask_journey.BlueprintBundle` object
         :raises:
-            - IncompatibleRoute if the route is not of type `Route`
+            - IncompatibleBundle if the route is not of type `BlueprintBundle`
         """
 
-        if not isinstance(route, Route):
-            raise IncompatibleRoute('Manager object passed to register_router must be of type {0}'.format(Route))
+        if not isinstance(bundle, BlueprintBundle):
+            raise IncompatibleBundle('BlueprintBundle object passed to attach_bundle must be of type {0}'
+                                    .format(BlueprintBundle))
 
-        registered_route = {
-            'base_path': route.path,
-            'description': route.description,
-            'blueprints': []
-        }
+        self._attached_bundles.append(bundle)
 
-        for (bp, description) in route.blueprints:
-            # Get route name (from url_prefix or name attr) and prepend with a slash
-            child_path = self.get_child_path(bp)
-
-            # Create full path to the BP route
-            base_path = route.path + child_path
-
-            # Register the BP
-            blueprint = self._register_blueprint(bp, base_path, child_path, description)
-
-            # Add routes for this blueprint
-            blueprint['routes'] = self._get_blueprint_routes(base_path)
-
-            # Finally, attach the blueprints to its parent
-            registered_route['blueprints'].append(blueprint)
-
-        self._routes.append(registered_route)
-
-    def _register_blueprint(self, bp, base_path, child_path, description):
+    def _register_blueprint(self, app, bp, bundle_path, child_path, description):
         """Register and return info about the registered blueprint
 
         :param bp: :class:`flask.Blueprint` object
-        :param base_path: the URL prefix of this blueprint
-        :param child_path: blueprint relative to the router path
+        :param bundle_path: the URL prefix of the bundle
+        :param child_path: blueprint relative to the bundle path
         :return: Dict with info about the blueprint
         """
 
-        self._app.register_blueprint(bp, url_prefix=base_path)
+        base_path = bundle_path + child_path
+
+        app.register_blueprint(bp, url_prefix=base_path)
+
         return {
             'name': bp.name,
             'path': child_path,
             'import_name': bp.import_name,
             'description': description,
-            'routes': []
+            'routes': self.get_blueprint_routes(app, base_path)
         }
 
     @staticmethod
@@ -163,16 +131,18 @@ class Journey(object):
 
         return bp.url_prefix or '/' + bp.name
 
-    def _get_blueprint_routes(self, base_path):
-        """Returns detailed information about registered blueprint routes matching the `Route` path
+    @staticmethod
+    def get_blueprint_routes(app, base_path):
+        """Returns detailed information about registered blueprint routes matching the `BlueprintBundle` path
 
+        :param app: App instance to obtain rules from
         :param base_path: Base path to return detailed route info for
         :return: List of route detail dicts
         """
 
         routes = []
 
-        for child in self._app.url_map.iter_rules():
+        for child in app.url_map.iter_rules():
             if child.rule.startswith(base_path):
                 relative_path = child.rule[len(base_path):]
                 routes.append({
