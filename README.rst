@@ -5,7 +5,8 @@ Lightweight extension for Flask that primarily assists with blueprint and route 
 
 It uses and is compatible with the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
-Add an auth component and you're pretty much up and running with your REST API.
+
+This along with an auth component is pretty much all you need for a solid REST API foundation. 
 
 
 Highlights
@@ -13,6 +14,12 @@ Highlights
 
 - Dead simple blueprint and route management that works with vanilla blueprints in Flask
 - Drop-in replacement for ``flask.Blueprint.route`` with support for Marshmallow deserialization + validation and marshalling
+
+
+Installing
+----------
+
+$ pip install flask-journey
 
 
 Basic usage
@@ -42,7 +49,7 @@ This component of Flask-Journey is primarily for larger applications using facto
   v1.attach_bp(groups_bp)
 
 
-**api/app.py**
+**api/__init__.py**
 
 .. code-block:: python
 
