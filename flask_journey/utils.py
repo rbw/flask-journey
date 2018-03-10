@@ -6,8 +6,6 @@ from marshmallow import ValidationError, Schema
 from .exceptions import IncompatibleSchema
 from furl import furl
 
-__DEFAULT_STRICT_SLASHES = False
-
 
 def _validate_schema(obj):
     """Ensures the passed schema instance is compatible
@@ -24,7 +22,7 @@ def _validate_schema(obj):
     return obj
 
 
-def route(bp, *args, strict_slashes=__DEFAULT_STRICT_SLASHES,
+def route(bp, *args, strict_slashes=False,
           body_schema=None, query_schema=None, marshal_with=None, **kwargs):
 
     """Journey route decorator
