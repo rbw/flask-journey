@@ -31,8 +31,7 @@ def create_plane(plane):
 
 
 def update_plane(plane_id, plane):
-    existing_plane = next((x for x in data if x['id'] == int(plane_id)), {})
-    if not existing_plane:
+    if not get_plane(plane_id):
         return {}
     else:
         for i, item in enumerate(data):
