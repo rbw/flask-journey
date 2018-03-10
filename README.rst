@@ -1,9 +1,9 @@
 Flask-Journey
 =============
 
-Lightweight extension for Flask that primarily assists with blueprint and route management, but also (de)serialization and validation in blueprint views.
+Lightweight and simple extension for Flask that primarily assists with blueprint and route management, but also (de)serialization and validation in blueprint enabled views.
 
-It uses and is compatible with the standard Flask blueprint system, is modular and doesn't depend on anything special.
+It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
 
 This along with an auth component is pretty much all you need for a solid REST API foundation. 
