@@ -96,7 +96,7 @@ class Journey(object):
 
         if not isinstance(bundle, BlueprintBundle):
             raise IncompatibleBundle('BlueprintBundle object passed to attach_bundle must be of type {0}'
-                                    .format(BlueprintBundle))
+                                     .format(BlueprintBundle))
 
         self._attached_bundles.append(bundle)
 

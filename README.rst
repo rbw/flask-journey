@@ -2,7 +2,7 @@ Flask-Journey
 =============
 
 
-Provides a clean, delarative way of importing and managing blueprints and creating routes.
+Provides a clean, declarative way of importing and managing blueprints and creating routes.
 In addition to this, it also enables simple and consistent methods of (de)serialization and validation in blueprint enabled views.
 
 It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
@@ -56,12 +56,12 @@ These are regular marshmallow type schemas
 
 **api/users/views.py**
 
-The ``flask_journey.utils.route`` decorator is used with standard Flask blueprints and enables easy (de)serialization and validation with the help of the Marshmallow library.
+The ``flask_journey.route`` decorator is used with standard Flask blueprints and enables easy (de)serialization and validation with the help of the Marshmallow library.
 
 .. code-block:: python
 
   from flask import Blueprint
-  from flask_journey.utils import route
+  from flask_journey import route
   from db import create_user, get_user
   
   from .schema import UserSchema
@@ -85,15 +85,15 @@ Blueprint / Route management
 This component of Flask-Journey is primarily for larger applications using factories, but works in any type of Flask application.
 
 
-**api/routes.py**
+**api/bundles.py**
 
 .. code-block:: python
 
-  from flask_journey import Route
+  from flask_journey import BlueprintBundle
   from .users import bp as users_bp
   from .groups import bp as groups_bp
 
-  v1 = Route('/api/v1')
+  v1 = BlueprintBundle(path='/api/v1')
   v1.attach_bp(users_bp, description='Users API')
   v1.attach_bp(groups_bp)
 
@@ -107,10 +107,12 @@ This component of Flask-Journey is primarily for larger applications using facto
 
   from .routes import v1
 
-  journey = Journey()
   app = Flask(__name__)
+
+  journey = Journey()
+  journey.attach_bundle(v1)
+
   journey.init_app(app)
-  journey.register_route(v1)
   
   print(journey.routes_simple)
 
