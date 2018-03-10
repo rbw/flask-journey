@@ -1,7 +1,7 @@
 Flask-Journey
 =============
 
-Lightweight extension for Flask that primarily assists with blueprint and route management, but also (de)serialization and validation for routes using blueprints.
+Lightweight extension for Flask that primarily assists with blueprint and route management, but also (de)serialization and validation in views using blueprints.
 
 It uses and is compatible with the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
@@ -18,7 +18,7 @@ Basic usage
 Blueprint / Route management
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The blueprint management component of Flask-Journey is primarily suited for larger applications with application factories, but works in any type of Flask application.
+This component of Flask-Journey is primarily for larger applications using factories, but works in any type of Flask application.
 
 
 **routes.py**
@@ -54,7 +54,7 @@ The blueprint management component of Flask-Journey is primarily suited for larg
 The route decorator
 ^^^^^^^^^^^^^^^^^^^
 
-**api/schemas.py**
+**api/users/schemas.py**
 
 These are regular marshmallow type schemas
 
@@ -73,7 +73,7 @@ These are regular marshmallow type schemas
       last_name = fields.String(required=True)
       user_name = fields.String(required=True)
 
-**api/routes.py**
+**api/users/views.py**
 
 The ``flask_journey.utils.route`` decorator is used with standard Flask blueprints and enables easy (de)serialization and validation with the help of the Marshmallow library.
 
