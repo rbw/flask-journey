@@ -4,7 +4,7 @@
 flask-journey
 ------------
 
-Lightweight extension for Flask that primarily assists with blueprint management,
+Lightweight extension for Flask that primarily assists with blueprint and route management,
 but also (de)serialization and validation in API routes.
 
 """
@@ -49,6 +49,8 @@ with io.open('README.rst') as readme:
         platforms='any',
         install_requires=[
             'Flask',
+            'marshmallow',
+            'furl',
             'Flask-Sphinx-Themes',
         ],
         classifiers=[
