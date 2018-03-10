@@ -11,3 +11,13 @@ Highlights
 - Dead simple blueprint and route management that works with vanilla blueprints in Flask
 - Drop-in replacement for ``flask.Blueprint.route`` with support for Marshmallow deserialization + validation and marshalling
 
+Blueprint / Route management
+----------------------------
+
+The blueprint management component of Flask-Journey is primarily for larger applications with application factories, but works in any type of Flask application.
+
+
+file ``routes.py``::
+
+from .users_api import 
+
