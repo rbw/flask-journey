@@ -34,7 +34,7 @@ Test it out *now* with a user-agent!
 Name                           Default value  Description
 ============================== ============== ================
 list routes with details       GET            http://127.0.0.1:5000/api/v1/routes
-planes with 3 or more wings    GET            http://127.0.0.1:5000/api/v1/planes?wings=3
+planes with 3 or more wings    GET            http://127.0.0.1:5000/api/v1/planes?min_wings=3
 get pilot by id                GET            http://127.0.0.1:5000/api/v1/pilots/1
 update plane #3                PUT            http://127.0.0.1:5000/api/v1/planes/3
 delete plane #2                DELETE         http://127.0.0.1:5000/api/v1/planes/2
