@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+# command to install dependencies
+install:
+  - pip install flask flask-journey coverage python-coveralls nose
+
+# command to run tests
+script:
+  - nosetests --with-coverage --cover-package=flask_marshmallow --cover-erase
+
+after_success:
+  - coveralls
+
