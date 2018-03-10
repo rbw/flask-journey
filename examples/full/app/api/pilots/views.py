@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, jsonify
-from flask_journey.utils import route
+from flask import Blueprint
+from flask_journey import route
 
 from app.fake_data.pilots import get_pilots, get_pilot
 
