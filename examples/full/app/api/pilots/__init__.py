@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .routes import bp
+from .views import bp
 
 
 

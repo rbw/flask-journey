@@ -27,6 +27,11 @@ Start the server using the manager::
 
 $ python manage.py runserver
 
+Then point your browser to::
+
+http://127.0.0.1:5000/api/v1/planes?wings=3
+
+...to check out it out from a browsers point of view.
 
 Other
 -----
