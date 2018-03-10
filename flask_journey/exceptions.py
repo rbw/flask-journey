@@ -9,5 +9,5 @@ class IncompatibleSchema(Exception):
     pass
 
 
-class IncompatibleRoute(Exception):
+class IncompatibleBundle(Exception):
     pass
