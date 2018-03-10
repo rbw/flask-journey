@@ -25,45 +25,9 @@ $ pip install flask-journey
 Basic usage
 -----------
 
-This shows some basic usage to give you an idea of how the extension works.
+This shows some super basic usage to give you an idea of how the extension works.
 
-Check out the **examples** directory for usable examples.
-
-
-Blueprint / Route management
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This component of Flask-Journey is primarily for larger applications using factories, but works in any type of Flask application.
-
-
-**api/routes.py**
-
-.. code-block:: python
-
-  from flask_journey import Route
-  from .users import bp as users_bp
-  from .groups import bp as groups_bp
-
-  v1 = Route('/api/v1')
-  v1.attach_bp(users_bp, description='Users API')
-  v1.attach_bp(groups_bp)
-
-
-**api/__init__.py**
-
-.. code-block:: python
-
-  from flask import Flask
-  from flask_journey import Journey
-
-  from .routes import v1
-
-  journey = Journey()
-  app = Flask(__name__)
-  journey.init_app(app)
-  journey.register_route(v1)
-  
-  print(journey.routes_simple)
+Check out the **examples** directory for actually usable examples.
 
 
 The route decorator
@@ -113,4 +77,53 @@ The ``flask_journey.utils.route`` decorator is used with standard Flask blueprin
 
 
 
+Blueprint / Route management
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This component of Flask-Journey is primarily for larger applications using factories, but works in any type of Flask application.
+
+
+**api/routes.py**
+
+.. code-block:: python
+
+  from flask_journey import Route
+  from .users import bp as users_bp
+  from .groups import bp as groups_bp
+
+  v1 = Route('/api/v1')
+  v1.attach_bp(users_bp, description='Users API')
+  v1.attach_bp(groups_bp)
+
+
+**api/__init__.py**
+
+.. code-block:: python
+
+  from flask import Flask
+  from flask_journey import Journey
+
+  from .routes import v1
+
+  journey = Journey()
+  app = Flask(__name__)
+  journey.init_app(app)
+  journey.register_route(v1)
+  
+  print(journey.routes_simple)
+
+
+
+Compatibility
+-------------
+- Python 2 and 3
+- Flask > 0.9
+
+Author
+------
+Created by Robert Wikman <rbw@vault13.org> in 2018
+
+JetBrains
+---------
+Thank you `Jetbrains <http://www.jetbrains.com>`_ for creating pycharm and for providing me with free licenses
 
