@@ -10,7 +10,12 @@
 __author__ = "Robert Wikman <rbw@vault13.org>"
 __version__ = "0.1.0"
 
-from .exceptions import IncompatibleBundle, InvalidBasePath, IncompatibleSchema
+from .exceptions import (
+    IncompatibleBundle, InvalidBundlePath, IncompatibleSchema,
+    InvalidBlueprint, NoBundlesAttached, MissingBlueprints,
+    InvalidBundlesType, DuplicateBundlePath
+)
+
 from .blueprint_bundle import BlueprintBundle
 from .utils import route
 
@@ -22,12 +27,17 @@ class Journey(object):
     :param app: App to pass directly to Journey
     """
 
-    def __init__(self, app=None):
+    def __init__(self, app=None, bundles=None):
         self._app = None
         self._registered_bundles = []
         self._attached_bundles = []
 
         if app is not None:
+            if not isinstance(bundles, list):
+                raise InvalidBundlesType('Bundles passed directly to Journey must be contained in a list')
+            else:
+                [self.attach_bundle(bundle) for bundle in bundles]
+
             self.init_app(app)
 
     def init_app(self, app):
@@ -35,6 +45,9 @@ class Journey(object):
 
         :param app: App passed from constructor or directly to init_app
         """
+
+        if len(self._attached_bundles) == 0:
+            raise NoBundlesAttached("At least one bundle must be attached before initializing Journey")
 
         for bundle in self._attached_bundles:
             processed_bundle = {
@@ -72,19 +85,26 @@ class Journey(object):
         routes = []
 
         for bundle in self._registered_bundles:
-            base_path = bundle['base_path']
+            bundle_path = bundle['path']
             for blueprint in bundle['blueprints']:
                 bp_path = blueprint['path']
                 for child in blueprint['routes']:
                     routes.append(
                         (
                             child['endpoint'],
-                            base_path + bp_path + child['path'],
+                            bundle_path + bp_path + child['path'],
                             child['methods']
                         )
                     )
 
         return routes
+
+    def bundle_exists(self, path):
+        for attached_bundle in self._attached_bundles:
+            if path == attached_bundle.path:
+                return True
+
+        return False
 
     def attach_bundle(self, bundle):
         """Attaches a bundle object
@@ -97,6 +117,10 @@ class Journey(object):
         if not isinstance(bundle, BlueprintBundle):
             raise IncompatibleBundle('BlueprintBundle object passed to attach_bundle must be of type {0}'
                                      .format(BlueprintBundle))
+        elif len(bundle.blueprints) == 0:
+            raise MissingBlueprints("Bundles must contain at least one flask.Blueprint")
+        elif self.bundle_exists(bundle.path):
+            raise DuplicateBundlePath("Duplicate bundle path {0}".format(bundle.path))
 
         self._attached_bundles.append(bundle)
 
