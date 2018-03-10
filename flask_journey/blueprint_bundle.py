@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from .exceptions import InvalidBasePath
+from flask import Blueprint
+from .exceptions import InvalidBundlePath, InvalidBlueprint
 
 
 class BlueprintBundle(object):
@@ -23,7 +24,9 @@ class BlueprintBundle(object):
         """
 
         if path[:1] != '/':
-            raise InvalidBasePath('The manager base path must start with a slash')
+            raise InvalidBundlePath('The bundle path must start with a slash')
+        elif len(path) == 1:
+            return path
 
         return path.rstrip('/')
 
@@ -33,5 +36,8 @@ class BlueprintBundle(object):
         :param bp: :class:`flask.Blueprint` object
         :param description: Optional description string
         """
+
+        if not isinstance(bp, Blueprint):
+            raise InvalidBlueprint('Blueprints attached to the bundle must be of type {0}'.format(Blueprint))
 
         self.blueprints.append((bp, description))

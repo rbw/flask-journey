@@ -31,8 +31,8 @@ def route(bp, *args, strict_slashes=__DEFAULT_STRICT_SLASHES,
 
     Enables simple serialization, deserialization and validation of Flask routes with the help of Marshmallow.
 
-    If deserialization (body_schema or query_schema) was passed to the decorator, the corresponding
-    :class`marshmallow.Schema` object gets passed to the decorated function.
+    If a schema (body_schema and/or query_schema) was passed to the decorator, the corresponding
+    :class`marshmallow.Schema` object gets passed to the decorated function:
 
     __query - kwarg if `query_schema` was passed
     __body - kwarg if `body_schema` was passed
