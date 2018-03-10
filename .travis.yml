@@ -9,11 +9,11 @@ python:
 
 # command to install dependencies
 install:
-  - pip install flask flask-journey coverage python-coveralls nose
+  - pip install flask marshmallow furl coverage python-coveralls nose
 
 # command to run tests
 script:
-  - nosetests --with-coverage --cover-package=flask_marshmallow --cover-erase
+  - nosetests --with-coverage --cover-package=flask_journey --cover-erase
 
 after_success:
   - coveralls
