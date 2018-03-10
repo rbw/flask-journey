@@ -11,7 +11,7 @@ from .schemas import PilotSchema, QuerySchema
 bp = Blueprint('pilots', __name__)
 
 
-@route(bp, '/<plane_id>', methods=['GET'], marshal_with=PilotSchema())
+@route(bp, '/<pilot_id>', methods=['GET'], marshal_with=PilotSchema())
 def get_one(pilot_id):
     return get_pilot(pilot_id)
 
