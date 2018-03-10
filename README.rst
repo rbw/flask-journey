@@ -1,7 +1,7 @@
 Flask-Journey
 =============
 
-Extension to Flask that primarily helps you with blueprint management, but also (de)serialization and validation in your API routes.
+Extension to Flask that primarily assists with blueprint management, but also (de)serialization and validation in API routes.
 
 It uses and is compatible with the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
