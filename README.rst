@@ -2,7 +2,8 @@ Flask-Journey
 =============
 
 
-Provides a clean, delarative way to import and manage blueprints and routes.
+Provides a clean, delarative way of import and management blueprints and routes.
+
 Additionally, it provides easy, homogeneous methods of (de)serialization and validation in blueprint enabled views.
 
 It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
