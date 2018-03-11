@@ -21,7 +21,7 @@ Usage
 
 Flask-Journey is managed through a ``Journey`` instance.
 
-*This component and procedure is only necessary if you plan on using the ``journey.BlueprintBundle`` for managing blueprints.*
+*This is only necessary if you plan on using the BlueprintBundle*
 
 If you're utilizing application factories, then you probably want to go the init_app() route.
 
