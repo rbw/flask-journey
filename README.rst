@@ -46,6 +46,11 @@ Documentation
 -------------
 The documentation can be found `here <http://flask-journey.readthedocs.org/>`_
 
+Full examples
+-------------
+Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/master/examples>`_
+
+Will add more shortly (simpler ones and marshmallow-sqlalchemy examples)
 
 Quick taste 
 -----------
