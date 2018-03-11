@@ -58,16 +58,30 @@ This shows a simple example of Journey's BlueprintBundle component.
 
 .. code-block:: python
 
-  # file: bundles.py
+    # file: bundles.py
 
-  from flask_journey import BlueprintBundle
-  from .users import bp as users_bp
-  from .groups import bp as groups_bp
+    from flask_journey import BlueprintBundle
+    from .users import bp as users_bp
+    from .groups import bp as groups_bp
 
-  v1 = BlueprintBundle(path='/api/v1')
-  v1.attach_bp(users_bp, description='Users API')
-  v1.attach_bp(groups_bp)
+    v1 = BlueprintBundle(path='/api/v1')
+    v1.attach_bp(users_bp, description='Users API')
+    v1.attach_bp(groups_bp)
 
+
+.. code-block:: python
+
+    # file: __init__.py
+
+    from flask import Flask
+    from flask_journey import Journey
+
+    from .bundles import v1
+
+    app = Flask(__name__)
+    journey = Journey()
+    journey.attach_bundle(v1)
+    journey.init_app(app)
 
 
 Compatibility
