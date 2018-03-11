@@ -61,12 +61,12 @@ This shows a simple example of Journey's BlueprintBundle component.
     # file: bundles.py
 
     from flask_journey import BlueprintBundle
-    from .users import bp as users_bp
-    from .groups import bp as groups_bp
+    from .users import bp as users
+    from .groups import bp as groups
 
     v1 = BlueprintBundle(path='/api/v1')
-    v1.attach_bp(users_bp, description='Users API')
-    v1.attach_bp(groups_bp)
+    v1.attach_bp(users, description='Users API')
+    v1.attach_bp(groups)
 
 
 .. code-block:: python
