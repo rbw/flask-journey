@@ -86,7 +86,7 @@ Regular marshmallow type schemas:
     from flask_journey import route
     from db import create_user, get_user
 
-    from .schema import UserSchema
+    from .schemas import UserSchema, QuerySchema
 
     bp = Blueprint('users', __name__)
 

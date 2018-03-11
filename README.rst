@@ -54,7 +54,7 @@ Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/
 Quick taste 
 -----------
 
-This shows a simple example of Journey's BlueprintBundle component.
+Simple example of ``Journey`` and ``BlueprintBundle``
 
 .. code-block:: python
 
