@@ -54,9 +54,11 @@ Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/
 Quick taste 
 -----------
 
-This shows a simple example Journey's BlueprintBundle component.
+This shows a simple example of Journey's BlueprintBundle component.
 
 .. code-block:: python
+
+  # file: bundles.py
 
   from flask_journey import BlueprintBundle
   from .users import bp as users_bp
