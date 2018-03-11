@@ -16,13 +16,12 @@ Use pip to install the extension::
     $ pip install flask-journey
 
 
-Usage
------
+Journey Usage
+-------------
+
+*This step is only necessary if you plan on using the BlueprintBundle*
 
 Flask-Journey is managed through a ``Journey`` instance.
-
-*This is only necessary if you plan on using the BlueprintBundle*
-
 If you're utilizing application factories, then you probably want to go the init_app() route.
 
 .. code-block:: python
