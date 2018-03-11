@@ -6,7 +6,7 @@ Flask-Journey
 The two core components of Journey, namely ``route`` and ``BlueprintBundle``, are not dependent of each other.
 However, there might be non-breaking code implemented in the future that enables the components integrate, either
 in a unidirectional or bidirectional way.
-This, and the fact that they operate in the same field, was the reason for adding them both to this extension.
+This, and the fact that they operate in the same field, was the motivation for adding both to this extension.
 
 Installation
 ------------
