@@ -21,7 +21,7 @@ Journey Usage
 
 *This step is only necessary if you plan on using the BlueprintBundle*
 
-Flask-Journey is managed through a ``Journey`` instance.
+The extension is managed through a ``Journey`` instance.
 If you're utilizing application factories, then you probably want to go the init_app() route:
 
 .. code-block:: python
@@ -37,7 +37,7 @@ If you're utilizing application factories, then you probably want to go the init
     journey.init_app(app)
 
 
-You may also set up ``Journey`` directly, passing a list of bundles to the constructor:
+You may also set up ``Journey`` directly, passing a list of bundles its constructor:
 
 .. code-block:: python
 
@@ -45,11 +45,10 @@ You may also set up ``Journey`` directly, passing a list of bundles to the const
     journey = Journey(app, bundles=[bundle1, bundle2])
 
 
-Examples
-========
 
-Using the ``Journey.route`` decorator
--------------------------------------
+
+The route decorator
+===================
 
 The ``route`` component, as mentioned previously, is not dependent on the Journey blueprint manager.
 However, functions decorated with ``flask_journey.route`` can of course, just as ``flask.Blueprint.route``, be added to your app with the help of Journey.
@@ -106,6 +105,10 @@ However, functions decorated with ``flask_journey.route`` can of course, just as
 
 
 
+Blueprints
+==========
+
+
 Bundling blueprints
 -------------------
 
@@ -157,23 +160,22 @@ Importing and registering bundles (along with blueprints) is easy as pie:
     journey.init_app(app)
 
 
-Real examples
--------------
 
-Full and usable examples can be found `here <https://github.com/rbw0/flask-journey/tree/master/examples>`_
-
-
-Route decorator
----------------
-
-.. automodule:: flask_journey.utils
-    :members:
+API Documentation
+=================
 
 
 Journey API
 -----------
 
 .. autoclass:: flask_journey.Journey
+    :members:
+
+
+Route decorator
+---------------
+
+.. automodule:: flask_journey.utils
     :members:
 
 

@@ -31,10 +31,10 @@ def route(bp, *args, **kwargs):
     :param args: args to pass along to `Blueprint.route`
     :param kwargs:
         - :strict_slashes: Enable / disable strict slashes (default False)
-        - :_query: Deserialize Query string with this schema
-        - :_body: Deserialize JSON body with this schema
+        - :validate: Enable / disable body/query validation (default True)
+        - :_query: Unmarshal Query string into this schema
+        - :_body: Unmarshal JSON body into this schema
         - :marshal_with: Serialize the output with this schema
-        - :validate: Set to False to disable schema validation
     :raises:
         - ValidationError if the query parameters or JSON body fails validation
     """
