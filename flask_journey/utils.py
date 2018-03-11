@@ -23,7 +23,6 @@ def _validate_schema(obj):
 
 
 def route(bp, *args, **kwargs):
-
     """Journey route decorator
 
     Enables simple serialization, deserialization and validation of Flask routes with the help of Marshmallow.
@@ -32,45 +31,42 @@ def route(bp, *args, **kwargs):
     :param args: args to pass along to `Blueprint.route`
     :param kwargs:
         - :strict_slashes: Enable / disable strict slashes (default False)
-        - :body_schema: Deserialize JSON body with this schema
-        - :query_schema: Deserialize Query string with this schema
+        - :_query: Deserialize Query string with this schema
+        - :_json: Deserialize JSON body with this schema
         - :marshal_with: Serialize the output with this schema
     :raises:
         - ValidationError if the query parameters or JSON body fails validation
     """
 
     kwargs['strict_slashes'] = kwargs.pop('strict_slashes', False)
-    body_schema = _validate_schema(kwargs.pop('body_schema', None))
-    query_schema = _validate_schema(kwargs.pop('query_schema', None))
-    marshal_with = _validate_schema(kwargs.pop('marshal_with', None))
+    body = _validate_schema(kwargs.pop('_body', None))
+    query = _validate_schema(kwargs.pop('_query', None))
+    output = _validate_schema(kwargs.pop('marshal_with', None))
+    validate = kwargs.pop('validate', True)
 
     def decorator(f):
         @bp.route(*args, **kwargs)
         @wraps(f)
         def wrapper(*inner_args, **inner_kwargs):
-            """If a schema (body_schema and/or query_schema) was passed to the route decorator, the deserialized
-            :class`marshmallow.Schema` object is injected into the decorated function's kwargs.
-
-            - :__query: kwarg if `query_schema` was passed
-            - :__body: kwarg if `body_schema` was passed
-            """
+            """If a schema (_body and/or _query) was supplied to the route decorator, the deserialized
+            :class`marshmallow.Schema` object is injected into the decorated function's kwargs."""
 
             try:
-                if query_schema:
+                if query is not None:
+                    query.strict = validate
                     url = furl(request.url)
-                    qs_data, qs_errors = query_schema.load(data=url.args)
-                    inner_kwargs['__query'] = {'data': qs_data, 'errors': qs_errors}
+                    inner_kwargs['_query'] = query.load(data=url.args)
 
-                if body_schema:
+                if body is not None:
+                    body.strict = validate
                     json_data = request.get_json()
-                    bs_data, bs_errors = body_schema.load(data=json_data)
-                    inner_kwargs['__body'] = {'data': bs_data, 'errors': bs_errors}
+                    inner_kwargs['_body'] = body.load(data=json_data)
 
             except ValidationError as err:
                 return jsonify(err.messages), 422
 
-            if marshal_with:
-                data = marshal_with.dump(f(*inner_args, **inner_kwargs))
+            if output:
+                data = output.dump(f(*inner_args, **inner_kwargs))
                 return jsonify(data[0])
 
             return f(*inner_args, **inner_kwargs)
