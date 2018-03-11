@@ -75,6 +75,10 @@ Regular marshmallow type schemas:
         user_name = fields.String(required=True)
 
 
+    users = UserSchema(many=True)
+    user = UserSchema()
+    query = QuerySchema()
+
 
 ...and the ``flask_journey.route`` decorator enables simple (de)serialization and validation:
 
@@ -86,18 +90,18 @@ Regular marshmallow type schemas:
     from flask_journey import route
     from db import create_user, get_user
 
-    from .schemas import UserSchema, QuerySchema
+    from .schemas import user, users, query
 
     bp = Blueprint('users', __name__)
 
-    @route(bp, '/', methods=['GET'], query_schema=QuerySchema(strict=True), marshal_with=UserSchema(many=True))
-    def get_many(__query=None):
-        return get_users(**__query['data'])
+    @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
+    def get_many(_query=None):
+        return get_users(**_query['data'])
 
 
-    @route(bp, '/', methods=['POST'], body_schema=UserSchema(strict=True), marshal_with=UserSchema())
-    def create(__body=None):
-        return create_user(**__body['data'])
+    @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
+    def create(_body=None):
+        return create_user(**_body['data'])
 
 
 These can be registered either using the regular ``register_blueprint`` method of your app, or using ``BlueprintBundle`` with ``Journey.attach_bundle``.
