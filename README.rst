@@ -20,7 +20,7 @@
 Description
 -----------
 
-Provides a clean and simple way of importing and managing blueprints. Additionally, the extension also enables consistent methods for (de)serialization and validation in blueprint enabled views.
+Provides a clean and simple way of importing and managing blueprints. Additionally, the extension also enables consistent methods of (de)serialization and validation in blueprint enabled views.
 
 It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
@@ -32,7 +32,7 @@ Highlights
 ----------
 
 - Dead simple blueprint and route management that works with vanilla blueprints in Flask
-- Drop-in replacement for ``flask.Blueprint.route`` with support for Marshmallow
+- Drop-in replacement of ``flask.Blueprint.route`` with support for Marshmallow
 
 
 Installing
