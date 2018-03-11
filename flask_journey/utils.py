@@ -32,8 +32,9 @@ def route(bp, *args, **kwargs):
     :param kwargs:
         - :strict_slashes: Enable / disable strict slashes (default False)
         - :_query: Deserialize Query string with this schema
-        - :_json: Deserialize JSON body with this schema
+        - :_body: Deserialize JSON body with this schema
         - :marshal_with: Serialize the output with this schema
+        - :validate: Set to False to disable schema validation
     :raises:
         - ValidationError if the query parameters or JSON body fails validation
     """

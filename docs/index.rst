@@ -55,7 +55,7 @@ The ``route`` component, as mentioned previously, is not dependent on the Journe
 However, functions decorated with ``flask_journey.route`` can of course, just as ``flask.Blueprint.route``, be added to your app with the help of Journey.
 
 
-Regular marshmallow type schemas:
+**Marshmallow compatible schemas:**
 
 .. code-block:: python
 
@@ -80,7 +80,7 @@ Regular marshmallow type schemas:
     query = QuerySchema()
 
 
-...and the ``flask_journey.route`` decorator enables simple (de)serialization and validation:
+**...with the flask_journey.route decorator enables simple (de)serialization and validation:**
 
 .. code-block:: python
 
@@ -96,15 +96,14 @@ Regular marshmallow type schemas:
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
     def get_many(_query=None):
-        return get_users(**_query.data)
+        return get_users(_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
     def create(_body=None):
-        return create_user(**_body.data)
+        return create_user(_body.data)
 
 
-These can be registered either using the regular ``register_blueprint`` method of your app, or using ``BlueprintBundle`` with ``Journey.attach_bundle``.
 
 
 Bundling blueprints
