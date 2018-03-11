@@ -41,6 +41,8 @@ def route(bp, *args, **kwargs):
         - :body_schema: Deserialize JSON body with this schema
         - :query_schema: Deserialize Query string with this schema
         - :marshal_with: Serialize the output with this schema
+    :raises:
+        - ValidationError if the query parameters or JSON body fails validation
     """
 
     kwargs['strict_slashes'] = kwargs.pop('strict_slashes', False)

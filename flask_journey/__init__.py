@@ -25,6 +25,8 @@ class Journey(object):
     Registers bundles and exposes properties for listing routes.
 
     :param app: App to pass directly to Journey
+    :raises:
+        - InvalidBundlesType if passed bundles is not of type list
     """
 
     def __init__(self, app=None, bundles=None):
@@ -44,6 +46,9 @@ class Journey(object):
         """Initializes Journey extension
 
         :param app: App passed from constructor or directly to init_app
+        :raises:
+            - NoBundlesAttached if no bundles has been attached attached
+
         """
 
         if len(self._attached_bundles) == 0:
@@ -99,7 +104,13 @@ class Journey(object):
 
         return routes
 
-    def bundle_exists(self, path):
+    def _bundle_exists(self, path):
+        """Checks if a bundle exists at the provided path
+
+        :param path: Bundle path
+        :return: bool
+        """
+
         for attached_bundle in self._attached_bundles:
             if path == attached_bundle.path:
                 return True
@@ -111,7 +122,9 @@ class Journey(object):
 
         :param bundle: :class:`flask_journey.BlueprintBundle` object
         :raises:
-            - IncompatibleBundle if the route is not of type `BlueprintBundle`
+            - IncompatibleBundle if the bundle is not of type `BlueprintBundle`
+            - DuplicateBundlePath if a bundle has already been attached at the same path
+            - MissingBlueprints if the bundle doesn't contain any blueprints
         """
 
         if not isinstance(bundle, BlueprintBundle):
@@ -119,7 +132,7 @@ class Journey(object):
                                      .format(BlueprintBundle))
         elif len(bundle.blueprints) == 0:
             raise MissingBlueprints("Bundles must contain at least one flask.Blueprint")
-        elif self.bundle_exists(bundle.path):
+        elif self._bundle_exists(bundle.path):
             raise DuplicateBundlePath("Duplicate bundle path {0}".format(bundle.path))
 
         self._attached_bundles.append(bundle)

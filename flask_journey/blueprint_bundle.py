@@ -20,7 +20,9 @@ class BlueprintBundle(object):
         """Performs sanitation of the route path after validating
 
         :param path: path to sanitize
-        :return: sanitized path
+        :return: path string
+        :raises:
+            - InvalidBundlePath if the path doesn't start with a slash
         """
 
         if path[:1] != '/':
@@ -35,6 +37,8 @@ class BlueprintBundle(object):
 
         :param bp: :class:`flask.Blueprint` object
         :param description: Optional description string
+        :raises:
+            - InvalidBlueprint if the Blueprint is not of type `flask.Blueprint`
         """
 
         if not isinstance(bp, Blueprint):
