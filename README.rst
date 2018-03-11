@@ -50,12 +50,12 @@ Full examples
 -------------
 Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/master/examples>`_
 
-Will add more shortly (simpler ones and marshmallow-sqlalchemy examples)
+*Will add more shortly (simpler ones and marshmallow-sqlalchemy)*
 
 Quick taste 
 -----------
 
-This shows a simple example of the BlueprintBundle component of Journey.
+This shows a simple example Journey's BlueprintBundle component.
 
 .. code-block:: python
 
@@ -67,8 +67,6 @@ This shows a simple example of the BlueprintBundle component of Journey.
   v1.attach_bp(users_bp, description='Users API')
   v1.attach_bp(groups_bp)
 
-
-Check out the **examples** directory for full examples.
 
 
 Compatibility
