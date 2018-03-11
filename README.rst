@@ -20,8 +20,7 @@
 Description
 -----------
 
-Provides a clean, declarative way of importing and managing blueprints and creating routes.
-In addition to this, the extension also enables simple and consistent methods of (de)serialization and validation in blueprint enabled views.
+Provides a clean, declarative way of importing and managing blueprints. Additionally, the extension also enables simple and consistent methods of (de)serialization and validation in blueprint enabled views.
 
 It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
 
