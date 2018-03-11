@@ -83,6 +83,8 @@ This shows a simple example of Journey's BlueprintBundle component.
     journey.attach_bundle(v1)
     journey.init_app(app)
 
+    print(journey.routes_simple)
+
 
 Compatibility
 -------------
