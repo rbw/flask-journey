@@ -5,7 +5,7 @@ from flask import Flask, Blueprint
 from flask_journey import (
     BlueprintBundle, Journey, NoBundlesAttached,
     MissingBlueprints, InvalidBundlesType, IncompatibleBundle,
-    DuplicateBundlePath
+    ConflictingPath
 )
 
 
@@ -79,7 +79,7 @@ class FlaskTestCase(TestCase):
         self.assertTrue(matched_bp2)
 
     def test_duplicate_bundle(self):
-        """Adding a bundle for a path that already exists should raise DuplicateBundlePath"""
+        """Adding a bundle for a path that already exists should raise ConflictingPath"""
 
         bpb1_path = '/api/v1'
         bpb2_path = '/api/v1'
@@ -92,7 +92,19 @@ class FlaskTestCase(TestCase):
 
         j = Journey()
         j.attach_bundle(bpb1)
-        self.assertRaises(DuplicateBundlePath, j.attach_bundle, bpb2)
+        self.assertRaises(ConflictingPath, j.attach_bundle, bpb2)
+
+    def test_bundle_journey_conflict(self):
+        """Adding a bundle for a path that already exists should raise ConflictingPath"""
+
+        bpb_path = '/'
+
+        bpb = BlueprintBundle(bpb_path)
+        bpb.attach_bp(self.blueprint)
+
+        j = Journey()
+        j._journey_path = '/'
+        self.assertRaises(ConflictingPath, j.attach_bundle, bpb)
 
     def test_bp_reuse(self):
         """Reusing blueprints in bundles should work"""
