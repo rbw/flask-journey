@@ -111,7 +111,7 @@ class Journey(object):
 
         :param bundle: :class:`flask_journey.BlueprintBundle` object
         :raises:
-            - IncompatibleBundle if the route is not of type `BlueprintBundle`
+            - IncompatibleBundle if the bundle is not of type `BlueprintBundle`
         """
 
         if not isinstance(bundle, BlueprintBundle):
