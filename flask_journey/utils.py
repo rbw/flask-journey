@@ -28,12 +28,6 @@ def route(bp, *args, **kwargs):
 
     Enables simple serialization, deserialization and validation of Flask routes with the help of Marshmallow.
 
-    If a schema (body_schema and/or query_schema) was passed to the decorator, the corresponding
-    :class`marshmallow.Schema` object gets passed to the decorated function:
-
-    __query - kwarg if `query_schema` was passed
-    __body - kwarg if `body_schema` was passed
-
     :param bp: :class:`flask.Blueprint` object
     :param args: args to pass along to `Blueprint.route`
     :param kwargs:
@@ -54,6 +48,13 @@ def route(bp, *args, **kwargs):
         @bp.route(*args, **kwargs)
         @wraps(f)
         def wrapper(*inner_args, **inner_kwargs):
+            """If a schema (body_schema and/or query_schema) was passed to the route decorator, the deserialized
+            :class`marshmallow.Schema` object is injected into the decorated function's kwargs.
+
+            - :__query: kwarg if `query_schema` was passed
+            - :__body: kwarg if `body_schema` was passed
+            """
+
             try:
                 if query_schema:
                     url = furl(request.url)

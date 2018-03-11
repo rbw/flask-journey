@@ -22,7 +22,7 @@ from .utils import route
 
 class Journey(object):
     """Central controller class.
-    Registers bundles and exposes properties for listing routes.
+    Exposes an API for managing blueprints and listing routes
 
     :param app: App to pass directly to Journey
     :raises:
@@ -73,7 +73,7 @@ class Journey(object):
 
     @property
     def routes_detailed(self):
-        """Returns a detailed list bundles and its blueprints and routes
+        """Returns a detailed list of bundles along with blueprints and routes
 
         :return: List of blueprint routes
         """
@@ -123,7 +123,7 @@ class Journey(object):
         :param bundle: :class:`flask_journey.BlueprintBundle` object
         :raises:
             - IncompatibleBundle if the bundle is not of type `BlueprintBundle`
-            - DuplicateBundlePath if a bundle has already been attached at the same path
+            - DuplicateBundlePath if a bundle already exists at bundle.path
             - MissingBlueprints if the bundle doesn't contain any blueprints
         """
 

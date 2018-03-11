@@ -20,7 +20,7 @@ class BlueprintBundle(object):
         """Performs sanitation of the route path after validating
 
         :param path: path to sanitize
-        :return: path string
+        :return: path
         :raises:
             - InvalidBundlePath if the path doesn't start with a slash
         """
