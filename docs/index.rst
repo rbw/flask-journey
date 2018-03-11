@@ -21,22 +21,20 @@ Usage
 
 Flask-Journey is managed through a ``Journey`` instance.
 
-This component and procedure is only necessary if you plan on using the ``journey.BlueprintBundle`` for managing blueprints.
+*This component and procedure is only necessary if you plan on using the ``journey.BlueprintBundle`` for managing blueprints.*
 
-Anyway - if you do want to use it and you're utilizing the application factory pattern, then you probably want to set up ``Journey`` with init_app():
+If you're utilizing application factories, then you probably want to go the init_app() route.
 
 .. code-block:: python
-
 
     from flask import Flask
     from flask_journey import Journey
 
-    from .bundles import bundle1, bundle2
+    from .bundles import bundle
 
     app = Flask(__name__)
     journey = Journey()
-    journey.attach_bundle(bundle1)
-    journey.attach_bundle(bundle2)
+    journey.attach_bundle(bundle)
     journey.init_app(app)
 
 
@@ -58,7 +56,7 @@ There are various benefits of using the Journey BlueprintBundle, and in many cas
 
 - It can be used to easily segregate your blueprint registration code from the other parts of your application.
 - It helps you group blueprints logically.
-- It allows you to utilize the Journey API (currently only to list routes)
+- It enables you to utilize the Journey API (currently only for blueprint bundle registration and listing routes)
 
 .. code-block:: python
 
@@ -86,7 +84,7 @@ There are various benefits of using the Journey BlueprintBundle, and in many cas
 Importing bundles
 -----------------
 
-Importing and registering bundles (and along with their blueprints) is easy as pie:
+Importing and registering bundles (along with blueprints) is easy as pie:
 
 .. code-block:: python
 
