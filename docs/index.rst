@@ -96,12 +96,12 @@ Regular marshmallow type schemas:
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
     def get_many(_query=None):
-        return get_users(**_query['data'])
+        return get_users(**_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
     def create(_body=None):
-        return create_user(**_body['data'])
+        return create_user(**_body.data)
 
 
 These can be registered either using the regular ``register_blueprint`` method of your app, or using ``BlueprintBundle`` with ``Journey.attach_bundle``.
