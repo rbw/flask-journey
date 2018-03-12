@@ -86,6 +86,11 @@ def route(bp, *args, **kwargs):
                 if body is not None:
                     body.strict = validate
                     json_data = request.get_json()
+
+                    if json_data is None:
+                        # Set json_data to empty dict if body is empty, so it gets picked up by the validator
+                        json_data = {}
+
                     inner_kwargs['_body'] = body.load(data=json_data)
 
             except ValidationError as err:
