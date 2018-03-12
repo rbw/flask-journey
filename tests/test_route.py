@@ -36,6 +36,8 @@ class FlaskTestCase(TestCase):
         self.blueprint = Blueprint('test', __name__)
 
     def test_query_schema(self):
+        """Passing a query with the required keys should work"""
+
         app = self.app
         bp = Blueprint('test', __name__)
 
@@ -62,6 +64,8 @@ class FlaskTestCase(TestCase):
         self.assertEqual(data, expected_output)
 
     def test_query_missing_required(self):
+        """Required keys missing in query should cause validation to fail"""
+
         app = self.app
         bp = Blueprint('test', __name__)
 
@@ -81,6 +85,8 @@ class FlaskTestCase(TestCase):
         self.assertTrue(response_has_key)
 
     def test_body_schema(self):
+        """Passing the expected body should work"""
+
         app = self.app
         bp = Blueprint('test', __name__)
 
@@ -108,6 +114,8 @@ class FlaskTestCase(TestCase):
         self.assertEqual(data, expected_output)
 
     def test_body_missing_required(self):
+        """Validation should let the user know which keys are missing"""
+
         app = self.app
         bp = Blueprint('test', __name__)
 
@@ -135,6 +143,8 @@ class FlaskTestCase(TestCase):
         self.assertTrue(response_has_key)
 
     def test_without_schemas(self):
+        """Not using a schema should fall back to default Blueprint.route mode"""
+
         app = self.app
         bp = Blueprint('test', __name__)
 
@@ -154,19 +164,47 @@ class FlaskTestCase(TestCase):
 
         self.assertEqual(data, expected_output)
 
+    def test_empty_json_body(self):
+        """Empty json body should cause validation to fail"""
+
+        app = self.app
+        bp = Blueprint('test', __name__)
+
+        @route(bp, '/test', methods=['POST'], _body=BodySchema(), marshal_with=OutputSchema())
+        def get_with_query(**kwargs):
+            return json.dumps({})
+
+        app.register_blueprint(bp)
+
+        response = self.client.post('/test')
+
+        data = json.loads(response.get_data())
+
+        response_contains_p1 = 'p1' in data
+        response_contains_p2 = 'p2' in data
+
+        self.assertTrue(response_contains_p1)
+        self.assertTrue(response_contains_p2)
+
     def test_invalid_body_schema(self):
+        """Passing an non-compatible schema in _body should raise IncompatibleSchema"""
+
         bp = Blueprint('test', __name__)
         kwargs = {'_body': dict()}
 
         self.assertRaises(IncompatibleSchema, route, bp, '/test', **kwargs)
 
     def test_invalid_query_schema(self):
+        """Passing an non-compatible schema in _query should raise IncompatibleSchema"""
+
         bp = Blueprint('test', __name__)
         kwargs = {'_query': dict()}
 
         self.assertRaises(IncompatibleSchema, route, bp, '/test', **kwargs)
 
     def test_invalid_marshal_with_schema(self):
+        """Passing an non-compatible schema in _marshal_with should raise IncompatibleSchema"""
+
         bp = Blueprint('test', __name__)
         kwargs = {'marshal_with': dict()}
 
