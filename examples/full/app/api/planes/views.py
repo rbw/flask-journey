@@ -17,7 +17,7 @@ def get_one(plane_id):
 
 
 @route(bp, '/<plane_id>', methods=['PUT'], _body=plane, marshal_with=plane)
-def update(plane_id, _body=None):
+def update(plane_id, _body):
     return update_plane(plane_id, _body.data)
 
 
@@ -27,12 +27,12 @@ def delete(plane_id):
 
 
 @route(bp, '/', methods=['GET'], _query=query, marshal_with=planes)
-def get_many(_query=None):
+def get_many(_query):
     return get_planes(_query.data['min_wings'])
 
 
 @route(bp, '/', methods=['POST'], _body=plane, marshal_with=plane)
-def create(_body=None):
+def create(_body):
     return create_plane(_body.data)
 
 

@@ -9,7 +9,7 @@ This example shows how a structured Flask application can utilize the Flask-Jour
 - Marshalling
 
 
-Note that the `routes` endpoint uses the regular ``route`` decorator from ``flask.Blueprint``. This is intentional to show that Flask-Journey works seamlessly with vanilla Flask blueprints.
+Note that the **routes** endpoint uses the regular ``route`` decorator from ``flask.Blueprint``. This is intentional to show that Flask-Journey works seamlessly with vanilla Flask blueprints.
 
 
 Preparations
@@ -33,7 +33,7 @@ Test it out *now* with a user-agent!
 ============================== ============== ================
 Name                           Default value  Description
 ============================== ============== ================
-list routes with details       GET            http://127.0.0.1:5000/api/v1/routes
+list routes with details       GET            http://127.0.0.1:5000/server-info/routes
 planes with 3 or more wings    GET            http://127.0.0.1:5000/api/v1/planes?min_wings=3
 get pilot by id                GET            http://127.0.0.1:5000/api/v1/pilots/1
 update plane #3                PUT            http://127.0.0.1:5000/api/v1/planes/3
