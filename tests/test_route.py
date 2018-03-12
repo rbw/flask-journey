@@ -178,7 +178,7 @@ class FlaskTestCase(TestCase):
 
         response = self.client.post('/test')
 
-        data = json.loads(response.get_data())
+        data = json.loads(response.get_data(as_text=True))
 
         response_contains_p1 = 'p1' in data
         response_contains_p2 = 'p2' in data
