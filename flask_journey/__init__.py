@@ -8,7 +8,7 @@
 """
 
 __author__ = "Robert Wikman <rbw@vault13.org>"
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 from .exceptions import (
     IncompatibleBundle, InvalidPath, IncompatibleSchema,
