@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
+
+from .utils import sanitize_path
 from .exceptions import InvalidBlueprint
-from . import journey
 
 
 class BlueprintBundle(object):
@@ -12,7 +13,7 @@ class BlueprintBundle(object):
     """
 
     def __init__(self, path='/', description=''):
-        self.path = journey.Journey.sanitize_path(path)
+        self.path = sanitize_path(path)
         self.description = description
         self.blueprints = []
 

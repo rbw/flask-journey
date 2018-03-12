@@ -1,10 +1,35 @@
 # -*- coding: utf-8 -*-
 
+import re
+
 from functools import wraps
 from flask import jsonify, request
 from marshmallow import ValidationError, Schema
-from .exceptions import IncompatibleSchema
 from furl import furl
+
+from .exceptions import IncompatibleSchema, InvalidPath
+
+
+def sanitize_path(path):
+    """Performs sanitation of the path after validating
+
+    :param path: path to sanitize
+    :return: path
+    :raises:
+        - InvalidPath if the path doesn't start with a slash
+    """
+
+    if path == '/':  # Nothing to do, just return
+        return path
+
+    if path[:1] != '/':
+        raise InvalidPath('The path must start with a slash')
+
+    # Deduplicate slashes in path
+    path = re.sub(r'/+', '/', path)
+
+    # Strip trailing slashes and return
+    return path.rstrip('/')
 
 
 def _validate_schema(obj):
