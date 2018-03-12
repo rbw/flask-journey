@@ -47,9 +47,9 @@ class FlaskTestCase(TestCase):
             'name': 'test'
         }
 
-        @route(bp, '/test', query_schema=QuerySchema(strict=True), marshal_with=OutputSchema())
+        @route(bp, '/test', _query=QuerySchema(), marshal_with=OutputSchema())
         def get_with_query(**kwargs):
-            q = kwargs['__query']['data']
+            q = kwargs['_query'].data
             self.assertEqual(q['p1'], test_p1_value)
             self.assertEqual(q['p2'], test_p2_value)
             return expected_output
@@ -67,7 +67,7 @@ class FlaskTestCase(TestCase):
 
         missing_key = 'p1'
 
-        @route(bp, '/test', query_schema=QuerySchema(strict=True))
+        @route(bp, '/test', _query=QuerySchema())
         def get_with_query(**kwargs):
             return json.dumps({})
 
@@ -91,9 +91,9 @@ class FlaskTestCase(TestCase):
             'name': 'test'
         }
 
-        @route(bp, '/test', methods=['POST'], body_schema=BodySchema(strict=True), marshal_with=OutputSchema())
+        @route(bp, '/test', methods=['POST'], _body=BodySchema(), marshal_with=OutputSchema())
         def get_with_query(**kwargs):
-            body = kwargs['__body']['data']
+            body = kwargs['_body'].data
             self.assertEqual(body, test_payload)
             return expected_output
 
@@ -119,7 +119,7 @@ class FlaskTestCase(TestCase):
             'name': 'test'
         }
 
-        @route(bp, '/test', methods=['POST'], body_schema=BodySchema(strict=True), marshal_with=OutputSchema())
+        @route(bp, '/test', methods=['POST'], _body=BodySchema(), marshal_with=OutputSchema())
         def get_with_query(**kwargs):
             return expected_output
 
@@ -156,13 +156,13 @@ class FlaskTestCase(TestCase):
 
     def test_invalid_body_schema(self):
         bp = Blueprint('test', __name__)
-        kwargs = {'body_schema': dict()}
+        kwargs = {'_body': dict()}
 
         self.assertRaises(IncompatibleSchema, route, bp, '/test', **kwargs)
 
     def test_invalid_query_schema(self):
         bp = Blueprint('test', __name__)
-        kwargs = {'query_schema': dict()}
+        kwargs = {'_query': dict()}
 
         self.assertRaises(IncompatibleSchema, route, bp, '/test', **kwargs)
 

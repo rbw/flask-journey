@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
 
-class InvalidBundlePath(Exception):
+class InvalidPath(Exception):
     pass
 
 
 class InvalidBundlesType(Exception):
+    pass
+
+
+class ConflictingPath(Exception):
     pass
 
 
@@ -29,5 +33,3 @@ class MissingBlueprints(Exception):
     pass
 
 
-class DuplicateBundlePath(Exception):
-    pass

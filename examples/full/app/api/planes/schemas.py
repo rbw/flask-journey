@@ -11,3 +11,8 @@ class PlaneSchema(Schema):
     id = fields.Integer(required=True)
     wings = fields.Integer(required=True)
     name = fields.String(required=True)
+
+
+planes = PlaneSchema(many=True)
+plane = PlaneSchema()
+query = QuerySchema()

@@ -5,20 +5,20 @@ from flask_journey import route
 
 from app.fake_data.planes import get_plane, get_planes, create_plane, update_plane, delete_plane
 
-from .schemas import PlaneSchema, QuerySchema
+from .schemas import plane, planes, query
 
 
 bp = Blueprint('silly_planes', __name__, url_prefix='/planes')
 
 
-@route(bp, '/<plane_id>', methods=['GET'], marshal_with=PlaneSchema())
+@route(bp, '/<plane_id>', methods=['GET'], marshal_with=plane)
 def get_one(plane_id):
     return get_plane(plane_id)
 
 
-@route(bp, '/<plane_id>', methods=['PUT'], body_schema=PlaneSchema(strict=True), marshal_with=PlaneSchema())
-def update(plane_id, __body=None):
-    return update_plane(plane_id, __body['data'])
+@route(bp, '/<plane_id>', methods=['PUT'], _body=plane, marshal_with=plane)
+def update(plane_id, _body=None):
+    return update_plane(plane_id, _body.data)
 
 
 @route(bp, '/<plane_id>', methods=['DELETE'])
@@ -26,13 +26,13 @@ def delete(plane_id):
     return jsonify(delete_plane(plane_id))
 
 
-@route(bp, '/', methods=['GET'], query_schema=QuerySchema(strict=True), marshal_with=PlaneSchema(many=True))
-def get_many(__query=None):
-    return get_planes(__query['data']['min_wings'])
+@route(bp, '/', methods=['GET'], _query=query, marshal_with=planes)
+def get_many(_query=None):
+    return get_planes(_query.data['min_wings'])
 
 
-@route(bp, '/', methods=['POST'], body_schema=PlaneSchema(strict=True), marshal_with=PlaneSchema())
-def create(__body=None):
-    return create_plane(__body['data'])
+@route(bp, '/', methods=['POST'], _body=plane, marshal_with=plane)
+def create(_body=None):
+    return create_plane(_body.data)
 
 

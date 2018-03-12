@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
-from .exceptions import InvalidBundlePath, InvalidBlueprint
+
+from .utils import sanitize_path
+from .exceptions import InvalidBlueprint
 
 
 class BlueprintBundle(object):
@@ -11,26 +13,9 @@ class BlueprintBundle(object):
     """
 
     def __init__(self, path='/', description=''):
-        self.path = self.sanitize_path(path)
+        self.path = sanitize_path(path)
         self.description = description
         self.blueprints = []
-
-    @staticmethod
-    def sanitize_path(path):
-        """Performs sanitation of the route path after validating
-
-        :param path: path to sanitize
-        :return: path
-        :raises:
-            - InvalidBundlePath if the path doesn't start with a slash
-        """
-
-        if path[:1] != '/':
-            raise InvalidBundlePath('The bundle path must start with a slash')
-        elif len(path) == 1:
-            return path
-
-        return path.rstrip('/')
 
     def attach_bp(self, bp, description=''):
         """Attaches a flask.Blueprint to the bundle

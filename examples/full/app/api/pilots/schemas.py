@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 
 class QuerySchema(Schema):
@@ -10,3 +10,8 @@ class QuerySchema(Schema):
 class PilotSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+
+
+pilots = PilotSchema(many=True)
+pilot = PilotSchema()
+query = QuerySchema()

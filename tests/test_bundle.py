@@ -2,15 +2,15 @@
 
 from unittest import TestCase
 from flask import Blueprint
-from flask_journey import BlueprintBundle, InvalidBundlePath, InvalidBlueprint
+from flask_journey import BlueprintBundle, InvalidPath, InvalidBlueprint
 
 
 class BundleTestCase(TestCase):
     def test_create_invalid_path(self):
-        """Invalid paths should raise an `InvalidBundlePath` exception"""
-        self.assertRaises(InvalidBundlePath, BlueprintBundle, 'test')
-        self.assertRaises(InvalidBundlePath, BlueprintBundle, 'test/')
-        self.assertRaises(InvalidBundlePath, BlueprintBundle, 'test/test')
+        """Invalid paths should raise an `InvalidPath` exception"""
+        self.assertRaises(InvalidPath, BlueprintBundle, 'test')
+        self.assertRaises(InvalidPath, BlueprintBundle, 'test/')
+        self.assertRaises(InvalidPath, BlueprintBundle, 'test/test')
 
     def test_create_valid_path(self):
         """Improper paths should get sanitized, valid paths should return what was provided"""
