@@ -17,7 +17,7 @@ def get_one(pilot_id):
 
 
 @route(bp, '/', methods=['GET'], _query=query, marshal_with=pilots, validate=False)
-def get_many(_query=None):
+def get_many(_query):
     pilot_name = _query.data.get('name', None)
     return get_pilots(pilot_name)
 
