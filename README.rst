@@ -18,7 +18,7 @@ Description
 -----------
 
 - Clean and simple way of importing and managing blueprints
-- Drop-in replacement for ``flask.Blueprint.route`` with support for ``marshmallow`` & ``marshmallow_sqlalchemy`` for all your (de)serialization and validation and needs.
+- Drop-in replacement for ``flask.Blueprint.route`` with support for ``marshmallow`` & ``marshmallow_sqlalchemy`` for all your (de)serialization and validation needs.
 
 Installing
 ----------
