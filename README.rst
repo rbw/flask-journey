@@ -45,19 +45,25 @@ Some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
     
     from flask import Blueprint
     from flask_journey import route
-    from .db import create_user, get_user
+
+    from .services import create_user, get_user, update_user
     from .schemas import user, users, query
 
     bp = Blueprint('users', __name__)
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
-    def get_many(_query):
+    def get_users(_query):
         return get_users(_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
-        def create(_body):
-            return create_user(_body.data)            
+    def create_user(_body):
+        return create_user(_body.data)
+
+
+    @route(bp, '/<user_id>', methods=['PUT'], _body=user, marshal_with=user)
+    def update_user(user_id, _body):
+        return update_user(user_id, _body.data)
 
 
 BlueprintBundle
@@ -115,5 +121,5 @@ Created by Robert Wikman <rbw@vault13.org> in 2018
 
 JetBrains
 ---------
-Thank you `Jetbrains <http://www.jetbrains.com>`_ for creating pycharm and for providing me with free licenses
+Thank you `Jetbrains <http://www.jetbrains.com>`_ for creating pycharm and providing me with free licenses
 

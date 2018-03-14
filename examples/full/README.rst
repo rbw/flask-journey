@@ -3,13 +3,12 @@ Full example
 
 This example shows how a structured Flask application can utilize the Flask-Journey extension for:
 
-- Simple route / blueprint management
-- Deserialization
-- Validation
-- Marshalling
+- blueprint management
+- (de)serialization
+- validation
 
 
-Note that the **routes** endpoint uses the regular ``route`` decorator from ``flask.Blueprint``. This is intentional to show that Flask-Journey works seamlessly with vanilla Flask blueprints.
+Note that the **routes view** uses the regular ``route`` decorator from ``flask.Blueprint``. This is intentional to show that Flask-Journey works seamlessly with vanilla Flask blueprints.
 
 
 Preparations
@@ -27,8 +26,6 @@ Start the server using the manager::
 
 $ python manage.py runserver
 
-
-Test it out *now* with a user-agent!
 
 ============================== ============== ================
 Name                           Default value  Description

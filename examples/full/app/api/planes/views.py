@@ -3,8 +3,7 @@
 from flask import Blueprint, jsonify
 from flask_journey import route
 
-from app.fake_data.planes import get_plane, get_planes, create_plane, update_plane, delete_plane
-
+from .services import get_plane, get_planes, create_plane, update_plane, delete_plane
 from .schemas import plane, planes, query
 
 

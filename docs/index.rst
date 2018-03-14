@@ -87,23 +87,25 @@ However, functions decorated with ``flask_journey.route`` can of course, just as
 
     from flask import Blueprint
     from flask_journey import route
-    from db import create_user, get_user
 
+    from .services import create_user, get_user, update_user
     from .schemas import user, users, query
 
     bp = Blueprint('users', __name__)
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
-    def get_many(_query=None):
+    def get_users(_query):
         return get_users(_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
-    def create(_body=None):
+    def create_user(_body):
         return create_user(_body.data)
 
 
-
+    @route(bp, '/<user_id>', methods=['PUT'], _body=user, marshal_with=user)
+    def update_user(user_id, _body):
+        return update_user(user_id, _body.data)
 
 Blueprints
 ==========
@@ -127,18 +129,15 @@ There are various benefits of using the Journey BlueprintBundle, and in most cas
     from .users import bp as users
     from .groups import bp as groups
     from .companies import bp as companies
-    from .new_feature import bp as new_feature
+    from .stuff import bp as stuff
 
     v1 = BlueprintBundle(path='/api/v1', description="API v1, stable")
     v1.attach_bp(users, description='Users CRUD')
     v1.attach_bp(groups)
     v1.attach_bp(companies, description='Companies API')
 
-    v2 = BlueprintBundle(path='/api/v2', description="API v2, beta")
-    v2.attach_bp(users, description='Users CRUD')
-    v2.attach_bp(groups)
-    v2.attach_bp(companies, description='Companies API')
-    v2.attach_bp(new_feature)
+    other = BlueprintBundle(path='/other')
+    other.attach_bp(stuff)
 
 
 Importing bundles
@@ -151,12 +150,12 @@ Importing and registering bundles (along with blueprints) is easy as pie:
     # file: api/__init__.py
 
     from flask import Flask
-    from .bundles import v1, v2
+    from .bundles import v1, other
 
     app = Flask(__name__)
     journey = Journey()
     journey.attach_bundle(v1)
-    journey.attach_bundle(v2)
+    journey.attach_bundle(other)
     journey.init_app(app)
 
 

@@ -3,8 +3,7 @@
 from flask import Blueprint
 from flask_journey import route
 
-from app.fake_data.pilots import get_pilots, get_pilot
-
+from .services import get_pilots, get_pilot
 from .schemas import pilot, pilots, query
 
 
