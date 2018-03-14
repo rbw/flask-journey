@@ -16,24 +16,11 @@
 .. image:: https://img.shields.io/badge/License-MIT-green.svg
     :target: https://opensource.org/licenses/MIT
 
-
 Description
 -----------
 
-Provides a clean and simple way of importing and managing blueprints. Additionally, the extension also enables consistent methods of (de)serialization and validation in blueprint enabled views.
-
-It uses the standard Flask blueprint system, is modular and doesn't depend on anything special.
-
-
-This along with an auth component is pretty much all you need for a solid REST API foundation. 
-
-
-Highlights
-----------
-
-- Dead simple blueprint and route management that works with vanilla blueprints in Flask
-- Drop-in replacement of ``flask.Blueprint.route`` with support for Marshmallow
-
+- Clean and simple way of importing and managing blueprints
+- Drop-in replacement for ``flask.Blueprint.route`` with support for ``marshmallow`` and ``marshmallow_sqlalchemy`` for all your (de)serialization and needs.
 
 Installing
 ----------
@@ -45,45 +32,78 @@ Documentation
 -------------
 The documentation can be found `here <http://flask-journey.readthedocs.org/>`_
 
-Full examples
--------------
-Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/master/examples>`_
-
-*Will add more shortly (simpler ones and marshmallow-sqlalchemy)*
 
 Quick taste 
 -----------
 
-Simple example of ``Journey`` and ``BlueprintBundle``
+Shows some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
+
+@route
+^^^^^^
+
+.. code-block:: python
+    
+    # file: api/users/views.py
+    
+    from flask import Blueprint
+    from flask_journey import route
+    from .db import create_user, get_user
+    from .schemas import user, users, query
+
+    bp = Blueprint('users', __name__)
+
+    @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
+    def get_many(_query=None):
+        return get_users(_query.data)
+
+
+    @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
+        def create(_body=None):
+            return create_user(_body.data)            
+
+
+BlueprintBundle
+^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
-    # file: bundles.py
+    # file: api/bundles.py
 
     from flask_journey import BlueprintBundle
-    from .users import bp as users
-    from .groups import bp as groups
+    from .users.views import bp as users_bp
 
     v1 = BlueprintBundle(path='/api/v1')
-    v1.attach_bp(users, description='Users API')
-    v1.attach_bp(groups)
+    v1.attach_bp(users_bp, description='Users API')
 
+
+Journey
+^^^^^^^
 
 .. code-block:: python
 
-    # file: __init__.py
+    # file: api/__init__.py
 
     from flask import Flask
     from flask_journey import Journey
 
     from .bundles import v1
 
-    app = Flask(__name__)
-    journey = Journey()
-    journey.attach_bundle(v1)
-    journey.init_app(app)
+    def create_app():
+        app = Flask(__name__)
+        journey = Journey()
+        journey.attach_bundle(v1)
+        journey.init_app(app)
 
-    print(journey.routes_simple)
+        print(journey.routes_simple)
+
+        return app
+
+
+Full examples
+-------------
+Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/master/examples>`_
+
+*Will add more shortly (simpler ones and marshmallow-sqlalchemy)*
 
 
 Compatibility
