@@ -1,12 +1,10 @@
 .. code-block::
 
-         _                                  
-        (_)___  __  ___________  ___  __  __
-       / / __ \/ / / / ___/ __ \/ _ \/ / / /
-      / / /_/ / /_/ / /  / / / /  __/ /_/ / 
-   __/ /\____/\__,_/_/  /_/ /_/\___/\__, /  
-  /___/ Flask blueprint management /____/
-
+            _                                
+           |_|___ _ _ ___ ___ ___ _ _        
+           | | . | | |  _|   | -_| | |_    _ 
+          _| |___|___|_| |_|_|___|_  |_|  |_|
+         |___|                   |___|       
 .. image:: https://coveralls.io/repos/github/rbw0/flask-journey/badge.svg?branch=master
     :target: https://coveralls.io/github/rbw0/flask-journey?branch=master
 .. image:: https://travis-ci.org/rbw0/flask-journey.svg?branch=master
@@ -20,7 +18,7 @@ Description
 -----------
 
 - Clean and simple way of importing and managing blueprints
-- Drop-in replacement for ``flask.Blueprint.route`` with support for ``marshmallow`` and ``marshmallow_sqlalchemy`` for all your (de)serialization and validation and needs.
+- Drop-in replacement for ``flask.Blueprint.route`` with support for ``marshmallow`` & ``marshmallow_sqlalchemy`` for all your (de)serialization and validation and needs.
 
 Installing
 ----------
@@ -36,7 +34,7 @@ The documentation can be found `here <http://flask-journey.readthedocs.org/>`_
 Quick taste 
 -----------
 
-Shows some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
+Some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
 
 @route
 ^^^^^^
@@ -103,7 +101,7 @@ Full examples
 -------------
 Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/master/examples>`_
 
-*Will add more shortly (simpler ones and marshmallow-sqlalchemy)*
+*Will add more shortly*
 
 
 Compatibility
