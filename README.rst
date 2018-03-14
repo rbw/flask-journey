@@ -1,10 +1,3 @@
-.. code-block::
-
-            _                                
-           |_|___ _ _ ___ ___ ___ _ _        
-           | | . | | |  _|   | -_| | |_    _ 
-          _| |___|___|_| |_|_|___|_  |_|  |_|
-         |___|                   |___|       
 .. image:: https://coveralls.io/repos/github/rbw0/flask-journey/badge.svg?branch=master
     :target: https://coveralls.io/github/rbw0/flask-journey?branch=master
 .. image:: https://travis-ci.org/rbw0/flask-journey.svg?branch=master
