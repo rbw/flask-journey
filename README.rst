@@ -53,12 +53,12 @@ Shows some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
     bp = Blueprint('users', __name__)
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
-    def get_many(_query=None):
+    def get_many(_query):
         return get_users(_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
-        def create(_body=None):
+        def create(_body):
             return create_user(_body.data)            
 
 
