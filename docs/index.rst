@@ -22,18 +22,19 @@ Journey Usage
 *This step is only necessary if you plan on using the BlueprintBundle*
 
 The extension is managed through a ``Journey`` instance.
-If you're utilizing application factories, then you probably want to go the init_app() route:
+If utilizing application factories, then you probably want to go the init_app() route:
 
 .. code-block:: python
 
     from flask import Flask
     from flask_journey import Journey
 
-    from .bundles import bundle
+    from .bundles import bundle1, bundle2
 
     app = Flask(__name__)
     journey = Journey()
-    journey.attach_bundle(bundle)
+    journey.attach_bundle(bundle1)
+    journey.attach_bundle(bundle2)
     journey.init_app(app)
 
 

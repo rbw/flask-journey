@@ -10,13 +10,24 @@
 Description
 -----------
 
-- Clean and simple way of importing and managing blueprints
-- Drop-in replacement for ``flask.Blueprint.route`` with support for ``marshmallow`` & ``marshmallow_sqlalchemy`` for all your (de)serialization and validation needs.
+Extension for Flask focusing on three important areas for REST APIs:
+
+* validation
+* (de)serialization
+* blueprint/route management
+
+
+Flask-journey makes the process of validating and (de)serializing data to/from python objects simple and elegant with the **Journey.route** decorator - a drop-in replacement for Flask's Blueprint.route, assisted by the fantastic **Marshmallow** library.
+
+The extension's other component, **BlueprintBundle**, helps segregate, group and register blueprints with ease while also providing methods for listing routes, either in simple or detailed JSON form.
+
 
 Installing
 ----------
 
-$ pip install flask-journey
+.. code-block::
+
+    pip install flask-journey
 
 
 Documentation
@@ -24,7 +35,7 @@ Documentation
 The documentation can be found `here <http://flask-journey.readthedocs.org/>`_
 
 
-Quick taste 
+Quick taste
 -----------
 
 Some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
@@ -33,9 +44,9 @@ Some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
 ^^^^^^
 
 .. code-block:: python
-    
+
     # file: api/users/views.py
-    
+
     from flask import Blueprint
     from flask_journey import route
 
@@ -67,10 +78,12 @@ BlueprintBundle
     # file: api/bundles.py
 
     from flask_journey import BlueprintBundle
-    from .users.views import bp as users_bp
+    from .users.views import bp as users
+    from .groups.views import bp as groups
 
     v1 = BlueprintBundle(path='/api/v1')
-    v1.attach_bp(users_bp, description='Users API')
+    v1.attach_bp(users, description='Users API')
+    v1.attach_bp(groups, description='Groups API')
 
 
 Journey
@@ -105,7 +118,7 @@ Working examples can be found `here <https://github.com/rbw0/flask-journey/tree/
 
 Compatibility
 -------------
-- Python 2 and 3
+- Python >= 2.7 or >= 3.4
 - Flask > 0.7
 
 Author
