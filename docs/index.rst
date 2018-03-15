@@ -95,17 +95,17 @@ However, functions decorated with ``flask_journey.route`` can of course, just as
     bp = Blueprint('users', __name__)
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
-    def get_users(_query):
+    def get_many(_query):
         return get_users(_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
-    def create_user(_body):
+    def create(_body):
         return create_user(_body.data)
 
 
     @route(bp, '/<user_id>', methods=['PUT'], _body=user, marshal_with=user)
-    def update_user(user_id, _body):
+    def update(user_id, _body):
         return update_user(user_id, _body.data)
 
 Blueprints

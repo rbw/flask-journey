@@ -19,7 +19,7 @@ Extension for Flask focusing on three important areas for REST APIs:
 
 Flask-journey makes the process of validating and (de)serializing data to/from python objects simple and elegant with the **Journey.route** decorator - a drop-in replacement for Flask's Blueprint.route, assisted by the fantastic **Marshmallow** library.
 
-The extension's other component, **BlueprintBundle**, helps segregate, group and register blueprints with ease while also providing methods for listing routes, either in simple or detailed JSON form.
+The extension's other component, **BlueprintBundle**, helps segregate, group and register blueprints with ease while also providing methods for listing routes, either in basic form or detailed JSON.
 
 
 Installing
@@ -56,17 +56,17 @@ Some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
     bp = Blueprint('users', __name__)
 
     @route(bp, '/', methods=['GET'], _query=query, marshal_with=users)
-    def get_users(_query):
+    def get_many(_query):
         return get_users(_query.data)
 
 
     @route(bp, '/', methods=['POST'], _body=user, marshal_with=user)
-    def create_user(_body):
+    def create(_body):
         return create_user(_body.data)
 
 
     @route(bp, '/<user_id>', methods=['PUT'], _body=user, marshal_with=user)
-    def update_user(user_id, _body):
+    def update(user_id, _body):
         return update_user(user_id, _body.data)
 
 
