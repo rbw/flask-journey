@@ -1,7 +1,7 @@
-.. image:: https://coveralls.io/repos/github/rbw/flask-journey/badge.svg?branch=master
-    :target: https://coveralls.io/github/rbw/flask-journey?branch=master
-.. image:: https://travis-ci.org/rbw0/flask-journey.svg?branch=master
-    :target: https://travis-ci.org/rbw0/flask-journey
+.. image:: https://travis-ci.org/rbw/flask-journey.svg?branch=master
+    :target: https://travis-ci.org/rbw/flask-journey
+.. image:: https://coveralls.io/repos/github/rbw0/flask-journey/badge.svg?branch=master
+    :target: https://coveralls.io/github/rbw0/flask-journey?branch=master
 .. image:: https://badge.fury.io/py/flask-journey.svg
     :target: https://pypi.python.org/pypi/flask-journey
 .. image:: https://img.shields.io/badge/License-MIT-green.svg
