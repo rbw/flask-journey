@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .views import bp
+from .controllers import bp
 
 
 

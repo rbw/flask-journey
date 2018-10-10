@@ -8,7 +8,7 @@ This example shows how a structured Flask application can utilize the Flask-Jour
 - validation
 
 
-Note that the **routes view** uses the regular ``route`` decorator from ``flask.Blueprint``. This is intentional to show that Flask-Journey works seamlessly with vanilla Flask blueprints.
+Note that the **routes controller** uses the regular ``route`` decorator from ``flask.Blueprint``. This is intentional to show that Flask-Journey works seamlessly with vanilla Flask blueprints.
 
 
 Preparations
