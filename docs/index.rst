@@ -84,7 +84,7 @@ However, functions decorated with ``flask_journey.route`` can of course, just as
 
 .. code-block:: python
 
-    # api/users/views.py
+    # api/users/controllers.py
 
     from flask import Blueprint
     from flask_journey import route

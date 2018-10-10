@@ -45,7 +45,7 @@ Some examples of ``@route`` and ``BlueprintBundle`` + ``Journey``
 
 .. code-block:: python
 
-    # file: api/users/views.py
+    # file: api/users/controllers.py
 
     from flask import Blueprint
     from flask_journey import route
@@ -78,8 +78,8 @@ BlueprintBundle
     # file: api/bundles.py
 
     from flask_journey import BlueprintBundle
-    from .users.views import bp as users
-    from .groups.views import bp as groups
+    from .users.controllers import bp as users
+    from .groups.controllers import bp as groups
 
     v1 = BlueprintBundle(path='/api/v1')
     v1.attach_bp(users, description='Users API')
